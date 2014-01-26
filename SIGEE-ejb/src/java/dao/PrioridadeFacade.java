@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import modelo.Impacto;
 import modelo.Prioridade;
 
 /**
@@ -30,8 +29,9 @@ public class PrioridadeFacade extends AbstractFacade<Prioridade> {
     public PrioridadeFacade() {
         super(Prioridade.class);
     }
+    
     public Prioridade getPrioridadePorCodigo(int codigoPrioridade){
         Query q = em.createQuery("SELECT p FROM Prioridade p WHERE p.codigoPrioridade = '"+ codigoPrioridade +"'");
         return (Prioridade)q.getSingleResult();        
-    }    
+    }      
 }

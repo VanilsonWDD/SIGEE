@@ -7,22 +7,27 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t"),
     @NamedQuery(name = "Ticket.findByCodigoTicket", query = "SELECT t FROM Ticket t WHERE t.codigoTicket = :codigoTicket"),
-    @NamedQuery(name = "Ticket.findByDescricaoTicket", query = "SELECT t FROM Ticket t WHERE t.descricaoTicket = :descricaoTicket"),
     @NamedQuery(name = "Ticket.findByDataProblemaTicket", query = "SELECT t FROM Ticket t WHERE t.dataProblemaTicket = :dataProblemaTicket")})
 public class Ticket implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,12 +47,19 @@ public class Ticket implements Serializable {
     @Basic(optional = false)
     @Column(name = "codigo_ticket")
     private Integer codigoTicket;
-    @Size(max = 1000)
+    @Lob
+    @Size(max = 2147483647)
     @Column(name = "descricao_ticket")
     private String descricaoTicket;
     @Column(name = "data_problema_ticket")
     @Temporal(TemporalType.DATE)
     private Date dataProblemaTicket;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTicket")
+    private Collection<FechoTicket> fechoTicketCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTicket")
+    private Collection<Intervencao> intervencaoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTicket")
+    private Collection<SolucaoTicket> solucaoTicketCollection;
     @JoinColumn(name = "codigo_site", referencedColumnName = "codigo_site")
     @ManyToOne
     private Site codigoSite;
@@ -61,9 +72,6 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "codigo_funcionario", referencedColumnName = "codigo_funcionario")
     @ManyToOne
     private Funcionario codigoFuncionario;
-    @JoinColumn(name = "codigo_fecho_ticket", referencedColumnName = "codigo_fecho_ticket")
-    @ManyToOne
-    private FechoTicket codigoFechoTicket;
     @JoinColumn(name = "codigo_estado", referencedColumnName = "codigo_estado")
     @ManyToOne
     private Estado codigoEstado;
@@ -102,6 +110,33 @@ public class Ticket implements Serializable {
         this.dataProblemaTicket = dataProblemaTicket;
     }
 
+    @XmlTransient
+    public Collection<FechoTicket> getFechoTicketCollection() {
+        return fechoTicketCollection;
+    }
+
+    public void setFechoTicketCollection(Collection<FechoTicket> fechoTicketCollection) {
+        this.fechoTicketCollection = fechoTicketCollection;
+    }
+
+    @XmlTransient
+    public Collection<Intervencao> getIntervencaoCollection() {
+        return intervencaoCollection;
+    }
+
+    public void setIntervencaoCollection(Collection<Intervencao> intervencaoCollection) {
+        this.intervencaoCollection = intervencaoCollection;
+    }
+
+    @XmlTransient
+    public Collection<SolucaoTicket> getSolucaoTicketCollection() {
+        return solucaoTicketCollection;
+    }
+
+    public void setSolucaoTicketCollection(Collection<SolucaoTicket> solucaoTicketCollection) {
+        this.solucaoTicketCollection = solucaoTicketCollection;
+    }
+
     public Site getCodigoSite() {
         return codigoSite;
     }
@@ -132,14 +167,6 @@ public class Ticket implements Serializable {
 
     public void setCodigoFuncionario(Funcionario codigoFuncionario) {
         this.codigoFuncionario = codigoFuncionario;
-    }
-
-    public FechoTicket getCodigoFechoTicket() {
-        return codigoFechoTicket;
-    }
-
-    public void setCodigoFechoTicket(FechoTicket codigoFechoTicket) {
-        this.codigoFechoTicket = codigoFechoTicket;
     }
 
     public Estado getCodigoEstado() {

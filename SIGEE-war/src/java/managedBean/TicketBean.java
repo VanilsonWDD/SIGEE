@@ -69,6 +69,9 @@ public class TicketBean {
         prioridade = new Prioridade();
         equipa = new Equipa();
     }
+//    public Ticket getTicketSelecionado(){
+//        return ticket;
+//    }
     public void guardar(){
 
         FacesContext fc = FacesContext.getCurrentInstance(); 
@@ -104,9 +107,6 @@ public class TicketBean {
     public List<Ticket> getTickets(){
         lt = ticketNegocio.getTickets();
         return lt;
-    }
-    public Ticket getTicketSelecionado(){
-        return ticket;
     }
     public Ticket getTicket() {
         return ticket;

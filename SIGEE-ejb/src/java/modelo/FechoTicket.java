@@ -7,19 +7,22 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,18 +39,22 @@ import javax.xml.bind.annotation.XmlTransient;
 public class FechoTicket implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "codigo_fecho_ticket")
     private Integer codigoFechoTicket;
     @Size(max = 45)
     @Column(name = "comentario_fecho_ticket")
     private String comentarioFechoTicket;
-    @Size(max = 45)
     @Column(name = "data_fecho_ticket")
-    private String dataFechoTicket;
-    @OneToMany(mappedBy = "codigoFechoTicket")
-    private Collection<Ticket> ticketCollection;
+    @Temporal(TemporalType.DATE)
+    private Date dataFechoTicket;
+    @JoinColumn(name = "codigo_estado_fecho", referencedColumnName = "codigo_estado_fecho")
+    @ManyToOne(optional = false)
+    private EstadoFechoTicket codigoEstadoFecho;
+    @JoinColumn(name = "codigo_ticket", referencedColumnName = "codigo_ticket")
+    @ManyToOne(optional = false)
+    private Ticket codigoTicket;
 
     public FechoTicket() {
     }
@@ -72,21 +79,28 @@ public class FechoTicket implements Serializable {
         this.comentarioFechoTicket = comentarioFechoTicket;
     }
 
-    public String getDataFechoTicket() {
+    public Date getDataFechoTicket() {
         return dataFechoTicket;
     }
 
-    public void setDataFechoTicket(String dataFechoTicket) {
+    public void setDataFechoTicket(Date dataFechoTicket) {
         this.dataFechoTicket = dataFechoTicket;
     }
 
-    @XmlTransient
-    public Collection<Ticket> getTicketCollection() {
-        return ticketCollection;
+    public EstadoFechoTicket getCodigoEstadoFecho() {
+        return codigoEstadoFecho;
     }
 
-    public void setTicketCollection(Collection<Ticket> ticketCollection) {
-        this.ticketCollection = ticketCollection;
+    public void setCodigoEstadoFecho(EstadoFechoTicket codigoEstadoFecho) {
+        this.codigoEstadoFecho = codigoEstadoFecho;
+    }
+
+    public Ticket getCodigoTicket() {
+        return codigoTicket;
+    }
+
+    public void setCodigoTicket(Ticket codigoTicket) {
+        this.codigoTicket = codigoTicket;
     }
 
     @Override

@@ -28,5 +28,5 @@ public class IntervencaoFacade extends AbstractFacade<Intervencao> {
     public IntervencaoFacade() {
         super(Intervencao.class);
     }
-   
+    
 }

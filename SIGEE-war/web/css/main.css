@@ -25,6 +25,7 @@ html {
 }
 body{
     font: 14px 'OpenSansLight'; 
+    overflow-y: hidden;
 }
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -116,30 +117,75 @@ textarea {
    manutenção
    ========================================================================== */
 .titulo{
-    width: 1080px;
+    width: 1067px;
     height: 44px;
     border-bottom:1px solid #f5f4f4;
-    
 }
 .painel-direito{
     margin-left:8px;
-    width: 1080px;
+    width: 1067px;
+    float: left;
+    height: auto;
 }
 .painel-direito h3{
     margin: 0;
     padding-top: 10px;
     font-size: 18px;
-    color: #2e2d2d;
-    
+    color: #2e2d2d;    
 }
 /* ==========================================================================
    ticket
    ========================================================================== */
 .tickets, .sites{
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .visualizar{
     margin-top: 10px;
+}
+.visualizar .ui-datatable-scrollable-body{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.visualizar .ui-datatable-scrollable-body{
+    width: 1083px !important;
+}
+.visualizar .ui-datatable-scrollable-header{
+    width: 1100px !important;
+}
+.largura-ticket-descricao{
+    max-width: 300px;
+}
+.largura-ticket-data-problema{
+    max-width: 80px;
+}
+.largura-ticket-site{
+    max-width: 60px;
+}
+.ui-growl .ui-shadow{
+    box-shadow: none;
+    
+}
+.ui-growl .ui-state-highlight{
+    border: none;
+    font: 14px 'OpenSansLight';
+    text-shadow: none;
+    background: none;
+    background-color: #2e2d2d;
+    font-weight: lighter;
+}
+.ui-growl-image{
+    width: 38px;
+    height: 38px;
+    background: url("../img/info-icon.png");
+}
+/*.ui-state-highlight .ui-icon{
+    background: url("../img/close-icon.png");
+
+}*/
+.visualizar .ui-state-highlight{
+    background: #2e2d2d !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
 }
 
 

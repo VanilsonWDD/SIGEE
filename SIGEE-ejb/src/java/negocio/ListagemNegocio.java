@@ -8,7 +8,6 @@ package negocio;
 
 import dao.EquipaFacade;
 import dao.EstadoFacade;
-import dao.EstadoIntervencaoFacade;
 import dao.FuncionarioFacade;
 import dao.ImpactoFacade;
 import dao.PrioridadeFacade;
@@ -20,7 +19,6 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import modelo.Equipa;
 import modelo.Estado;
-import modelo.EstadoIntervencao;
 import modelo.Funcionario;
 import modelo.Impacto;
 import modelo.Prioridade;
@@ -34,8 +32,6 @@ import modelo.TipoSite;
 @Stateless
 @LocalBean
 public class ListagemNegocio {
-    @EJB
-    private EstadoIntervencaoFacade estadoIntervencaoFacade;
     @EJB
     private TipoSiteFacade tipoSiteFacade;
     @EJB
@@ -71,8 +67,5 @@ public class ListagemNegocio {
     } 
     public List<TipoSite> getTipoSites(){
         return tipoSiteFacade.findAll();
-    }
-    public List<EstadoIntervencao> getEstadoIntervencoes(){
-        return estadoIntervencaoFacade.findAll();
     }
 }

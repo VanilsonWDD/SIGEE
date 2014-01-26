@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import modelo.Funcionario;
 import modelo.Impacto;
 
 /**
@@ -30,8 +29,9 @@ public class ImpactoFacade extends AbstractFacade<Impacto> {
     public ImpactoFacade() {
         super(Impacto.class);
     }
+
     public Impacto getImpactoPorCodigo(int codigoImpacto){
         Query q = em.createQuery("SELECT i FROM Impacto i WHERE i.codigoImpacto = '"+ codigoImpacto +"'");
         return (Impacto)q.getSingleResult();        
-    }        
+    }
 }

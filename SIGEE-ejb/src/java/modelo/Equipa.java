@@ -45,8 +45,6 @@ public class Equipa implements Serializable {
     @Column(name = "nome_equipa")
     private String nomeEquipa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEquipa")
-    private Collection<Intervencao> intervencaoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEquipa")
     private Collection<EquipaResponsavel> equipaResponsavelCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipa")
     private Collection<EquipaFuncionario> equipaFuncionarioCollection;
@@ -74,15 +72,6 @@ public class Equipa implements Serializable {
 
     public void setNomeEquipa(String nomeEquipa) {
         this.nomeEquipa = nomeEquipa;
-    }
-
-    @XmlTransient
-    public Collection<Intervencao> getIntervencaoCollection() {
-        return intervencaoCollection;
-    }
-
-    public void setIntervencaoCollection(Collection<Intervencao> intervencaoCollection) {
-        this.intervencaoCollection = intervencaoCollection;
     }
 
     @XmlTransient

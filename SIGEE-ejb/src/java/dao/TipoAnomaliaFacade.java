@@ -9,14 +9,14 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import modelo.FotoSite;
+import modelo.TipoAnomalia;
 
 /**
  *
  * @author Vanilson
  */
 @Stateless
-public class FotoSiteFacade extends AbstractFacade<FotoSite> {
+public class TipoAnomaliaFacade extends AbstractFacade<TipoAnomalia> {
     @PersistenceContext(unitName = "SIGEE-ejbPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class FotoSiteFacade extends AbstractFacade<FotoSite> {
         return em;
     }
 
-    public FotoSiteFacade() {
-        super(FotoSite.class);
+    public TipoAnomaliaFacade() {
+        super(TipoAnomalia.class);
     }
     
 }

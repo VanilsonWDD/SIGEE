@@ -34,8 +34,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Funcionario.findAll", query = "SELECT f FROM Funcionario f"),
     @NamedQuery(name = "Funcionario.findByCodigoFuncionario", query = "SELECT f FROM Funcionario f WHERE f.codigoFuncionario = :codigoFuncionario"),
-    @NamedQuery(name = "Funcionario.findByNomeFuncionario", query = "SELECT f FROM Funcionario f WHERE f.nomeFuncionario = :nomeFuncionario")})
+    @NamedQuery(name = "Funcionario.findByNomeFuncionario", query = "SELECT f FROM Funcionario f WHERE f.nomeFuncionario = :nomeFuncionario"),
+    @NamedQuery(name = "Funcionario.findByUsernameFuncionario", query = "SELECT f FROM Funcionario f WHERE f.usernameFuncionario = :usernameFuncionario"),
+    @NamedQuery(name = "Funcionario.findBySenhaFuncionario", query = "SELECT f FROM Funcionario f WHERE f.senhaFuncionario = :senhaFuncionario")})
 public class Funcionario implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codigo_funcionario")
+    private Integer codigoFuncionario;
+    @Size(max = 45)
+    @Column(name = "nome_funcionario")
+    private String nomeFuncionario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 300)
@@ -46,15 +57,6 @@ public class Funcionario implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "senha_funcionario")
     private String senhaFuncionario;
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "codigo_funcionario")
-    private Integer codigoFuncionario;
-    @Size(max = 45)
-    @Column(name = "nome_funcionario")
-    private String nomeFuncionario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoFuncionario")
     private Collection<EquipaResponsavel> equipaResponsavelCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
@@ -67,6 +69,12 @@ public class Funcionario implements Serializable {
 
     public Funcionario(Integer codigoFuncionario) {
         this.codigoFuncionario = codigoFuncionario;
+    }
+
+    public Funcionario(Integer codigoFuncionario, String usernameFuncionario, String senhaFuncionario) {
+        this.codigoFuncionario = codigoFuncionario;
+        this.usernameFuncionario = usernameFuncionario;
+        this.senhaFuncionario = senhaFuncionario;
     }
 
     public Integer getCodigoFuncionario() {
@@ -83,6 +91,22 @@ public class Funcionario implements Serializable {
 
     public void setNomeFuncionario(String nomeFuncionario) {
         this.nomeFuncionario = nomeFuncionario;
+    }
+
+    public String getUsernameFuncionario() {
+        return usernameFuncionario;
+    }
+
+    public void setUsernameFuncionario(String usernameFuncionario) {
+        this.usernameFuncionario = usernameFuncionario;
+    }
+
+    public String getSenhaFuncionario() {
+        return senhaFuncionario;
+    }
+
+    public void setSenhaFuncionario(String senhaFuncionario) {
+        this.senhaFuncionario = senhaFuncionario;
     }
 
     @XmlTransient
@@ -135,22 +159,6 @@ public class Funcionario implements Serializable {
     @Override
     public String toString() {
         return "modelo.Funcionario[ codigoFuncionario=" + codigoFuncionario + " ]";
-    }
-
-    public String getUsernameFuncionario() {
-        return usernameFuncionario;
-    }
-
-    public void setUsernameFuncionario(String usernameFuncionario) {
-        this.usernameFuncionario = usernameFuncionario;
-    }
-
-    public String getSenhaFuncionario() {
-        return senhaFuncionario;
-    }
-
-    public void setSenhaFuncionario(String senhaFuncionario) {
-        this.senhaFuncionario = senhaFuncionario;
     }
     
 }

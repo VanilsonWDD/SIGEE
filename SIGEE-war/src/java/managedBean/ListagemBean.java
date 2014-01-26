@@ -12,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Equipa;
 import modelo.Estado;
-import modelo.EstadoIntervencao;
 import modelo.Funcionario;
 import modelo.Impacto;
 import modelo.Prioridade;
@@ -38,7 +37,6 @@ public class ListagemBean {
     private List<Prioridade> lp;
     private List<Estado> les;
     private List<TipoSite> lts;
-    private List<EstadoIntervencao> lei;
     private Site site;
     private Ticket ticket;
     private Funcionario funcionario;
@@ -47,16 +45,11 @@ public class ListagemBean {
     private Prioridade prioridade;
     private Estado estado;
     private TipoSite tipoSite;
-    private EstadoIntervencao estadoIntervencao;
     /**
      * Creates a new instance of Ticket
      */
     public ListagemBean() {
         site = new Site();
-    }
-    public List<EstadoIntervencao> getEstadoIntervencoes(){
-        lei = listagemNegocio.getEstadoIntervencoes();
-        return lei;
     }
     public List<TipoSite> getTipoSites(){
         lts = listagemNegocio.getTipoSites();
@@ -149,14 +142,6 @@ public class ListagemBean {
 
     public void setTipoSite(TipoSite tipoSite) {
         this.tipoSite = tipoSite;
-    }
-
-    public EstadoIntervencao getEstadoIntervencao() {
-        return estadoIntervencao;
-    }
-
-    public void setEstadoIntervencao(EstadoIntervencao estadoIntervencao) {
-        this.estadoIntervencao = estadoIntervencao;
     }
 
 }

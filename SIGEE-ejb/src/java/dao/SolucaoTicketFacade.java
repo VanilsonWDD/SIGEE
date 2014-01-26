@@ -9,15 +9,14 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import modelo.EstadoIntervencao;
+import modelo.SolucaoTicket;
 
 /**
  *
  * @author Vanilson
  */
 @Stateless
-public class EstadoIntervencaoFacade extends AbstractFacade<EstadoIntervencao> {
+public class SolucaoTicketFacade extends AbstractFacade<SolucaoTicket> {
     @PersistenceContext(unitName = "SIGEE-ejbPU")
     private EntityManager em;
 
@@ -26,12 +25,8 @@ public class EstadoIntervencaoFacade extends AbstractFacade<EstadoIntervencao> {
         return em;
     }
 
-    public EstadoIntervencaoFacade() {
-        super(EstadoIntervencao.class);
+    public SolucaoTicketFacade() {
+        super(SolucaoTicket.class);
     }
     
-    public EstadoIntervencao getEstadoIntervencaoPorCodigo(int codigoEstadoIntervencao){
-        Query q = em.createQuery("SELECT ei FROM EstadoIntervencao ei WHERE ei.codigoEstadoIntervencao = '"+ codigoEstadoIntervencao +"'");
-        return (EstadoIntervencao)q.getSingleResult();        
-    }      
 }

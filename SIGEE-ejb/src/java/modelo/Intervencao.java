@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Intervencao.findAll", query = "SELECT i FROM Intervencao i"),
     @NamedQuery(name = "Intervencao.findByCodigoIntervencao", query = "SELECT i FROM Intervencao i WHERE i.codigoIntervencao = :codigoIntervencao"),
-    @NamedQuery(name = "Intervencao.findByComentarioIntervencao", query = "SELECT i FROM Intervencao i WHERE i.comentarioIntervencao = :comentarioIntervencao"),
     @NamedQuery(name = "Intervencao.findByDataIntervencao", query = "SELECT i FROM Intervencao i WHERE i.dataIntervencao = :dataIntervencao")})
 public class Intervencao implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,18 +43,16 @@ public class Intervencao implements Serializable {
     @Basic(optional = false)
     @Column(name = "codigo_intervencao")
     private Integer codigoIntervencao;
-    @Size(max = 1000)
+    @Lob
+    @Size(max = 2147483647)
     @Column(name = "comentario_intervencao")
     private String comentarioIntervencao;
     @Column(name = "data_intervencao")
     @Temporal(TemporalType.DATE)
     private Date dataIntervencao;
-    @JoinColumn(name = "codigo_estado_intervencao", referencedColumnName = "codigo_estado_intervencao")
+    @JoinColumn(name = "codigo_ticket", referencedColumnName = "codigo_ticket")
     @ManyToOne(optional = false)
-    private EstadoIntervencao codigoEstadoIntervencao;
-    @JoinColumn(name = "codigo_equipa", referencedColumnName = "codigo_equipa")
-    @ManyToOne(optional = false)
-    private Equipa codigoEquipa;
+    private Ticket codigoTicket;
 
     public Intervencao() {
     }
@@ -87,20 +85,12 @@ public class Intervencao implements Serializable {
         this.dataIntervencao = dataIntervencao;
     }
 
-    public EstadoIntervencao getCodigoEstadoIntervencao() {
-        return codigoEstadoIntervencao;
+    public Ticket getCodigoTicket() {
+        return codigoTicket;
     }
 
-    public void setCodigoEstadoIntervencao(EstadoIntervencao codigoEstadoIntervencao) {
-        this.codigoEstadoIntervencao = codigoEstadoIntervencao;
-    }
-
-    public Equipa getCodigoEquipa() {
-        return codigoEquipa;
-    }
-
-    public void setCodigoEquipa(Equipa codigoEquipa) {
-        this.codigoEquipa = codigoEquipa;
+    public void setCodigoTicket(Ticket codigoTicket) {
+        this.codigoTicket = codigoTicket;
     }
 
     @Override

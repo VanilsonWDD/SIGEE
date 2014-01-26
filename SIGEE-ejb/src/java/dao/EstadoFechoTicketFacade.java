@@ -9,15 +9,14 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import modelo.TipoSite;
+import modelo.EstadoFechoTicket;
 
 /**
  *
  * @author Vanilson
  */
 @Stateless
-public class TipoSiteFacade extends AbstractFacade<TipoSite> {
+public class EstadoFechoTicketFacade extends AbstractFacade<EstadoFechoTicket> {
     @PersistenceContext(unitName = "SIGEE-ejbPU")
     private EntityManager em;
 
@@ -26,12 +25,8 @@ public class TipoSiteFacade extends AbstractFacade<TipoSite> {
         return em;
     }
 
-    public TipoSiteFacade() {
-        super(TipoSite.class);
+    public EstadoFechoTicketFacade() {
+        super(EstadoFechoTicket.class);
     }
-
-    public TipoSite getTipoSitePorCodigo(int codigoTipoSite){
-        Query q = em.createQuery("SELECT ts FROM TipoSite ts WHERE ts.codigoTipoSite = '"+ codigoTipoSite +"'");
-        return (TipoSite)q.getSingleResult();        
-    } 
+    
 }

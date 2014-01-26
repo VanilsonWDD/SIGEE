@@ -30,6 +30,7 @@ public class FuncionarioFacade extends AbstractFacade<Funcionario> {
     public FuncionarioFacade() {
         super(Funcionario.class);
     }
+
     public Funcionario getFuncionarioPorCodigo(int codigoFuncionario){
         Query q = em.createQuery("SELECT f FROM Funcionario f WHERE f.codigoFuncionario = '"+ codigoFuncionario +"'");
         return (Funcionario)q.getSingleResult();        

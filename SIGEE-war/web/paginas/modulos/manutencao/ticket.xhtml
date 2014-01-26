@@ -6,30 +6,37 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="./masterPageManutencao.xhtml">
+    <script>
+        
+    </script>
     <ui:define name="content">
         <h:form>
-            <div class="titulo">
+            <!--<div class="titulo">
                 <h3>Ticket</h3>
-            </div>
+            </div>-->
+            
             <div class ="tickets">
                 <div class = "btn-novo">
-                    <p:commandButton value = "Novo ticket" onclick="dialogNovoTicket.show()" id = "novo"></p:commandButton>
+                    <p:commandButton value = "Novo ticket" onclick="dialogNovoTicket.show()" id="novo"></p:commandButton>&nbsp;
+                    <p:commandButton value = "Eliminar ticket" styleClass="btn-eliminar"></p:commandButton>
                 </div>
                 <div class = "visualizar">
                 
 
                     <p:dataTable id="tabelaTickets" value="#{ticketBean.tickets}" var="ticket" scrollWidth="1000"
-                     paginator="true" rows="6"  
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                     rowsPerPageTemplate="5,10">
-
+                     paginator="true" rows="15"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}  {NextPageLink} {LastPageLink}"  
+                     scrollable="true" scrollHeight="410" currentPageReportTemplate="Pagina {currentPage} de {totalPages}, {totalRecords} tickets registados"
+                     selection="#{ticketBean.tickets}" rowKey="#{ticketBean.ticket}">
+                        
+                        <p:column selectionMode="multiple" style="width:3%" id="chkDelete" styleClass="chkDelete"/>
                         <p:column styleClass="largura-ticket-descricao">
                             <f:facet name="header">
                                 <h:outputText value="Descrição"/>
                             </f:facet>
                             <h:outputText value="#{ticket.descricaoTicket}"/>
                         </p:column>
-                        <p:column>
+                        <p:column styleClass="largura-ticket-data-problema">
                             <f:facet name="header">
                                 <h:outputText value="Data do problema"/>
                             </f:facet>
@@ -37,7 +44,7 @@
                                 <f:convertDateTime pattern="dd-MM-yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column styleClass="largura-ticket-site">
                             <f:facet name="header">
                                 <h:outputText value="Site"/>
                             </f:facet>
@@ -59,7 +66,10 @@
                             <f:facet name="header">
                                 <h:outputText value="Opções"/>
                             </f:facet>
-                            <p:commandButton action="#{ticketBean.eliminar(ticket.codigoTicket)}" icon="eliminar" update="tabelaTickets" title="Eliminar"/>
+                            <p:commandButton id="btn-eliminar" action="#{ticketBean.eliminar(ticket.codigoTicket)}" icon="eliminar-icon" update="tabelaTickets"/>
+                            <!--<p:commandButton id="btn-ver-dados" icon="ver-dados-icon"/>-->
+                            
+                            <p:tooltip for="btn-eliminar" value="Eliminar ticket" showEffect="fade" hideEffect="fade" /> 
                         </p:column> 
                     </p:dataTable>
                 

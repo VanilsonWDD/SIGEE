@@ -9,13 +9,13 @@ package modelo;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -52,11 +52,32 @@ public class Site implements Serializable {
     private Integer latitude;
     @Column(name = "longitude")
     private Integer longitude;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "primeira_foto_site")
+    private String primeiraFotoSite;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "segunda_foto_site")
+    private String segundaFotoSite;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "terceira_foto_site")
+    private String terceiraFotoSite;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "quarta_foto_site")
+    private String quartaFotoSite;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "quinta_foto_site")
+    private String quintaFotoSite;
+    @JoinColumn(name = "codigo_tipo_anomalia", referencedColumnName = "codigo_tipo_anomalia")
+    @ManyToOne(optional = false)
+    private TipoAnomalia codigoTipoAnomalia;
     @JoinColumn(name = "codigo_tipo_site", referencedColumnName = "codigo_tipo_site")
     @ManyToOne(optional = false)
     private TipoSite codigoTipoSite;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoSite")
-    private Collection<FotoSite> fotoSiteCollection;
     @OneToMany(mappedBy = "codigoSite")
     private Collection<Ticket> ticketCollection;
 
@@ -99,21 +120,60 @@ public class Site implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getPrimeiraFotoSite() {
+        return primeiraFotoSite;
+    }
+
+    public void setPrimeiraFotoSite(String primeiraFotoSite) {
+        this.primeiraFotoSite = primeiraFotoSite;
+    }
+
+    public String getSegundaFotoSite() {
+        return segundaFotoSite;
+    }
+
+    public void setSegundaFotoSite(String segundaFotoSite) {
+        this.segundaFotoSite = segundaFotoSite;
+    }
+
+    public String getTerceiraFotoSite() {
+        return terceiraFotoSite;
+    }
+
+    public void setTerceiraFotoSite(String terceiraFotoSite) {
+        this.terceiraFotoSite = terceiraFotoSite;
+    }
+
+    public String getQuartaFotoSite() {
+        return quartaFotoSite;
+    }
+
+    public void setQuartaFotoSite(String quartaFotoSite) {
+        this.quartaFotoSite = quartaFotoSite;
+    }
+
+    public String getQuintaFotoSite() {
+        return quintaFotoSite;
+    }
+
+    public void setQuintaFotoSite(String quintaFotoSite) {
+        this.quintaFotoSite = quintaFotoSite;
+    }
+
+    public TipoAnomalia getCodigoTipoAnomalia() {
+        return codigoTipoAnomalia;
+    }
+
+    public void setCodigoTipoAnomalia(TipoAnomalia codigoTipoAnomalia) {
+        this.codigoTipoAnomalia = codigoTipoAnomalia;
+    }
+
     public TipoSite getCodigoTipoSite() {
         return codigoTipoSite;
     }
 
     public void setCodigoTipoSite(TipoSite codigoTipoSite) {
         this.codigoTipoSite = codigoTipoSite;
-    }
-
-    @XmlTransient
-    public Collection<FotoSite> getFotoSiteCollection() {
-        return fotoSiteCollection;
-    }
-
-    public void setFotoSiteCollection(Collection<FotoSite> fotoSiteCollection) {
-        this.fotoSiteCollection = fotoSiteCollection;
     }
 
     @XmlTransient
