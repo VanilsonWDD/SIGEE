@@ -73,7 +73,7 @@ public class TicketBean {
 //        return ticket;
 //    }
     public void guardar(){
-
+        
         FacesContext fc = FacesContext.getCurrentInstance(); 
         int codigoSite = site.getCodigoSite();
         int codigoFuncionario = funcionario.getCodigoFuncionario();
@@ -100,6 +100,10 @@ public class TicketBean {
         
         fc.addMessage(null, new FacesMessage("Ticket", "O novo ticket foi salvo com sucesso"));  
         
+    }
+    public void actualizar(){
+        ticket.setDescricaoTicket("actualizar dados");
+        System.out.println("Lorem ipsum");
     }
     public void eliminar(int codigoTicket){
         ticketNegocio.eliminar(codigoTicket);

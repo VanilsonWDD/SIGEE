@@ -361,6 +361,14 @@ textarea {
     background-image: url("../img/eliminar-icon.png")  !important; 
     background-position: center;
 }
+.actualizar-icon{
+    background-image: url("../img/actualizar-icon.png")  !important; 
+    background-position: center;
+}
+.ver-dados-icon{
+    background-image: url("../img/dados-icon.png")  !important; 
+    background-position: center;
+}
 .ui-dialog-footer span{
     font-size: 12px;
 }
