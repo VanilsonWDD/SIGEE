@@ -44,12 +44,12 @@ public class Equipa implements Serializable {
     @Size(max = 45)
     @Column(name = "nome_equipa")
     private String nomeEquipa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEquipa")
-    private Collection<EquipaResponsavel> equipaResponsavelCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipa")
     private Collection<EquipaFuncionario> equipaFuncionarioCollection;
     @OneToMany(mappedBy = "codigoEquipa")
     private Collection<Ticket> ticketCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEquipa")
+    private Collection<EquipaResponsavel> equipaResponsavelCollection;
 
     public Equipa() {
     }
@@ -75,15 +75,6 @@ public class Equipa implements Serializable {
     }
 
     @XmlTransient
-    public Collection<EquipaResponsavel> getEquipaResponsavelCollection() {
-        return equipaResponsavelCollection;
-    }
-
-    public void setEquipaResponsavelCollection(Collection<EquipaResponsavel> equipaResponsavelCollection) {
-        this.equipaResponsavelCollection = equipaResponsavelCollection;
-    }
-
-    @XmlTransient
     public Collection<EquipaFuncionario> getEquipaFuncionarioCollection() {
         return equipaFuncionarioCollection;
     }
@@ -99,6 +90,15 @@ public class Equipa implements Serializable {
 
     public void setTicketCollection(Collection<Ticket> ticketCollection) {
         this.ticketCollection = ticketCollection;
+    }
+
+    @XmlTransient
+    public Collection<EquipaResponsavel> getEquipaResponsavelCollection() {
+        return equipaResponsavelCollection;
+    }
+
+    public void setEquipaResponsavelCollection(Collection<EquipaResponsavel> equipaResponsavelCollection) {
+        this.equipaResponsavelCollection = equipaResponsavelCollection;
     }
 
     @Override

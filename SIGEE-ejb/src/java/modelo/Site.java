@@ -54,32 +54,20 @@ public class Site implements Serializable {
     private Integer longitude;
     @Lob
     @Size(max = 2147483647)
-    @Column(name = "primeira_foto_site")
-    private String primeiraFotoSite;
+    @Column(name = "caminho_foto_site")
+    private String caminhoFotoSite;
     @Lob
     @Size(max = 2147483647)
-    @Column(name = "segunda_foto_site")
-    private String segundaFotoSite;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "terceira_foto_site")
-    private String terceiraFotoSite;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "quarta_foto_site")
-    private String quartaFotoSite;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "quinta_foto_site")
-    private String quintaFotoSite;
-    @JoinColumn(name = "codigo_tipo_anomalia", referencedColumnName = "codigo_tipo_anomalia")
-    @ManyToOne(optional = false)
-    private TipoAnomalia codigoTipoAnomalia;
+    @Column(name = "nome_foto_site")
+    private String nomeFotoSite;
+    @OneToMany(mappedBy = "codigoSite")
+    private Collection<Ticket> ticketCollection;
     @JoinColumn(name = "codigo_tipo_site", referencedColumnName = "codigo_tipo_site")
     @ManyToOne(optional = false)
     private TipoSite codigoTipoSite;
-    @OneToMany(mappedBy = "codigoSite")
-    private Collection<Ticket> ticketCollection;
+    @JoinColumn(name = "codigo_tipo_anomalia", referencedColumnName = "codigo_tipo_anomalia")
+    @ManyToOne(optional = false)
+    private TipoAnomalia codigoTipoAnomalia;
 
     public Site() {
     }
@@ -120,52 +108,29 @@ public class Site implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getPrimeiraFotoSite() {
-        return primeiraFotoSite;
+    public String getCaminhoFotoSite() {
+        return caminhoFotoSite;
     }
 
-    public void setPrimeiraFotoSite(String primeiraFotoSite) {
-        this.primeiraFotoSite = primeiraFotoSite;
+    public void setCaminhoFotoSite(String caminhoFotoSite) {
+        this.caminhoFotoSite = caminhoFotoSite;
     }
 
-    public String getSegundaFotoSite() {
-        return segundaFotoSite;
+    public String getNomeFotoSite() {
+        return nomeFotoSite;
     }
 
-    public void setSegundaFotoSite(String segundaFotoSite) {
-        this.segundaFotoSite = segundaFotoSite;
+    public void setNomeFotoSite(String nomeFotoSite) {
+        this.nomeFotoSite = nomeFotoSite;
     }
 
-    public String getTerceiraFotoSite() {
-        return terceiraFotoSite;
+    @XmlTransient
+    public Collection<Ticket> getTicketCollection() {
+        return ticketCollection;
     }
 
-    public void setTerceiraFotoSite(String terceiraFotoSite) {
-        this.terceiraFotoSite = terceiraFotoSite;
-    }
-
-    public String getQuartaFotoSite() {
-        return quartaFotoSite;
-    }
-
-    public void setQuartaFotoSite(String quartaFotoSite) {
-        this.quartaFotoSite = quartaFotoSite;
-    }
-
-    public String getQuintaFotoSite() {
-        return quintaFotoSite;
-    }
-
-    public void setQuintaFotoSite(String quintaFotoSite) {
-        this.quintaFotoSite = quintaFotoSite;
-    }
-
-    public TipoAnomalia getCodigoTipoAnomalia() {
-        return codigoTipoAnomalia;
-    }
-
-    public void setCodigoTipoAnomalia(TipoAnomalia codigoTipoAnomalia) {
-        this.codigoTipoAnomalia = codigoTipoAnomalia;
+    public void setTicketCollection(Collection<Ticket> ticketCollection) {
+        this.ticketCollection = ticketCollection;
     }
 
     public TipoSite getCodigoTipoSite() {
@@ -176,13 +141,12 @@ public class Site implements Serializable {
         this.codigoTipoSite = codigoTipoSite;
     }
 
-    @XmlTransient
-    public Collection<Ticket> getTicketCollection() {
-        return ticketCollection;
+    public TipoAnomalia getCodigoTipoAnomalia() {
+        return codigoTipoAnomalia;
     }
 
-    public void setTicketCollection(Collection<Ticket> ticketCollection) {
-        this.ticketCollection = ticketCollection;
+    public void setCodigoTipoAnomalia(TipoAnomalia codigoTipoAnomalia) {
+        this.codigoTipoAnomalia = codigoTipoAnomalia;
     }
 
     @Override

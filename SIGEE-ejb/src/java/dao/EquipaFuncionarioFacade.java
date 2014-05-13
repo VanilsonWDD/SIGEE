@@ -6,9 +6,11 @@
 
 package dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.EquipaFuncionario;
 
 /**
@@ -28,5 +30,11 @@ public class EquipaFuncionarioFacade extends AbstractFacade<EquipaFuncionario> {
     public EquipaFuncionarioFacade() {
         super(EquipaFuncionario.class);
     }
-    
+    public List<EquipaFuncionario> getEquipaFuncionarioPorCodigo(int codigoEquipa){
+        Query q = em.createQuery("SELECT ef FROM EquipaFuncionario ef WHERE ef.equipaFuncionarioPK.codigoEquipa  = '"+ codigoEquipa +"'");
+        return q.getResultList();        
+    }
+    public void eliminarEquipa(int codigoEquipa){
+        Query q = em.createQuery("DELETE FROM EquipaFuncionario ef WHERE ef.equipaFuncionarioPK.codigoEquipa  = '"+ codigoEquipa +"'");    
+    }   
 }

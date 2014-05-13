@@ -33,9 +33,13 @@ public class TicketNegocio {
         ticket = ticketFacade.find(codigoTicket);
         ticketFacade.remove(ticket);
     }    
+    public void actualizar(Ticket t){
+        ticketFacade.edit(t);
+    }
     public List<Ticket> getTickets(){
         return ticketFacade.findAll();
     }
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }

@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./masterPageManutencao.xhtml">
+    <script>
+        
+    </script>
+    <ui:define name="content">
+        <h:form id="form">
+            <!--<div class="titulo">
+                <h3>Ticket</h3>
+            </div>-->
+            
+            <div class ="tickets">
+                <div class = "btn-novo">
+                    <p:commandButton value = "Novo ticket" onclick="dialogNovoTicket.show()" id="novo"></p:commandButton>&nbsp;
+                   <!-- <p:commandButton value = "Eliminar ticket" styleClass="btn-eliminar"></p:commandButton>-->
+                </div>
+                <div class = "visualizar">
+                
+                    
+                    <p:dataTable id="tabelaTickets" value="#{ticketBean.tickets}" var="ticket" scrollWidth="1000"
+                     paginator="true" rows="15"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}  {NextPageLink} {LastPageLink}"  
+                     scrollable="true" scrollHeight="410" currentPageReportTemplate="Pagina {currentPage} de {totalPages}, {totalRecords} tickets registados"
+                     editable="true">
+                        
+                        <!--<p:column selectionMode="multiple" style="width:3%" id="chkDelete" styleClass="chkDelete"/>-->
+                        <p:column styleClass="largura-ticket-descricao">
+                            <f:facet name="header">
+                                <h:outputText value="Descrição"/>
+                            </f:facet>
+                            <h:outputText value="#{ticket.descricaoTicket}"/>
+                        </p:column>
+                        <p:column styleClass="largura-ticket-data-problema">
+                            <f:facet name="header">
+                                <h:outputText value="Data do problema"/>
+                            </f:facet>
+                            <h:outputText value="#{ticket.dataProblemaTicket}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column styleClass="largura-ticket-site">
+                            <f:facet name="header">
+                                <h:outputText value="Site"/>
+                            </f:facet>
+                            <h:outputText value="#{ticket.codigoSite.nomeSite}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Prioridade"/>
+                            </f:facet>
+                            <h:outputText value="#{ticket.codigoPrioridade.tipoPrioridade}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <h:outputText value="#{ticket.codigoEstado.tipoEstado}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Opções"/>
+                            </f:facet>
+                            <p:growl id="mensagemEliminarTicket" showDetail="true" severity="info"/>
+                            <p:commandButton id="btn-eliminar" onclick="dialogEliminarTicket.show()" icon="eliminar-icon" title="Eliminar"/>
+                            <p:confirmDialog message="Tem a certeza que deseja eliminar o ticket?" header="Eliminar ticket" severity="alert"
+                                             widgetVar="dialogEliminarTicket" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" actionListener="#{ticketBean.eliminar(ticket.codigoTicket)}" onclick="dialogEliminarTicket.hide()" 
+                                                 update="mensagemEliminarTicket, tabelaTickets" styleClass="btn-eliminar-sim"/>
+                                <p:commandButton value="Não" type="button" onclick="dialogEliminarTicket.hide()" styleClass="btn-eliminar-nao"/>
+                            </p:confirmDialog>                   
+                            <p:commandButton id="btn-actualizar" icon="actualizar-icon" update=":form:actualizarTicket" oncomplete="dialogActualizarTicket.show()" title="actualizar">
+                                <f:setPropertyActionListener value="#{ticket}" target="#{ticketBean.ticket}"/>
+                            </p:commandButton>
+                            <p:commandButton id="btn-ver-dados" icon="ver-dados-icon" update=":form:dadosTicket" oncomplete="dialogDadosTicket.show()" title="Ver todos os dados">
+                                <f:setPropertyActionListener value="#{ticket}" target="#{ticketBean.ticket}"/>
+                            </p:commandButton>
+                            
+
+                        </p:column> 
+                    </p:dataTable>
+                
+
+                </div>
+                <div class = "dialog">
+                    <div class ="ver-dados">
+                        <p:dialog header="Dados do ticket" widgetVar="dialogDadosTicket"  
+                                  showEffect="fade" hideEffect="fade" width="380" modal="true" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                            <h:panelGrid id="dadosTicket" columns="2">
+                                    <h:outputLabel value="Site:" styleClass="texto-negrito"/>  
+                                    <h:outputLabel value="#{ticketBean.ticket.codigoSite.nomeSite}"/>
+
+                                    <h:outputLabel value="Reportado por:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{ticketBean.ticket.pkFuncionario.nomeCompleto}"/>
+
+                                    <h:outputLabel value="Impacto:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{ticketBean.ticket.codigoImpacto.tipoImpacto}"/>
+
+                                    <h:outputLabel value="Equipa atribuida:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{ticketBean.ticket.codigoEquipa.nomeEquipa}"/>
+
+                                    <h:outputLabel value="Prioridade:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{ticketBean.ticket.codigoPrioridade.tipoPrioridade}"/>
+
+                                    <h:outputLabel value="Estado:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{ticketBean.ticket.codigoEstado.tipoEstado}"/>
+
+                                    <h:outputLabel value="Data do problema:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{ticketBean.ticket.dataProblemaTicket}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputLabel>
+
+                                    <h:outputLabel value="Descrição:"  styleClass="texto-negrito"/>
+                                    <h:outputLabel value="#{ticketBean.ticket.descricaoTicket}"/>
+
+
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                    <div class="actualizar-dados">
+                        <p:dialog header="Actualizar dados do ticket" widgetVar="dialogActualizarTicket"
+                                  showEffect="fade" hideEffect="fade" width="585" modal="true" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                            <h:panelGrid id="actualizarTicket" columns="2">
+
+
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                    <p:dialog widgetVar="dialogNovoTicket" modal="true" showEffect="fade" hideEffect="fade" header="Criação de novo ticket" width="585" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                        
+                            <p:panelGrid columns="2">  
+                                <h:outputLabel value="Site" />  
+                                <p:selectOneMenu id="sltSite" filter="true" filterMatchMode="startsWith" value="#{ticketBean.site.codigoSite}">  
+                                    <f:selectItems value="#{listagemBean.sites}" var="site" itemValue="#{site.codigoSite}" itemLabel="#{site.nomeSite}" />  
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Reportado por" /> 
+                                <p:selectOneMenu id="sltFuncionario" filter="true" filterMatchMode="startsWith" value="#{ticketBean.funcionario.pkFuncionario}">  
+                                    <f:selectItems value="#{listagemBean.funcionarios}" var="funcionario" itemValue="#{funcionario.pkFuncionario}" itemLabel="#{funcionario.nomeCompleto}" />  
+                                </p:selectOneMenu> 
+
+                                <h:outputLabel value="Impacto" /> 
+                                <p:selectOneMenu id="sltImpacto" filter="true" filterMatchMode="startsWith" value="#{ticketBean.impacto.codigoImpacto}">  
+                                    <f:selectItems value="#{listagemBean.impactos}" var="impacto" itemValue="#{impacto.codigoImpacto}" itemLabel="#{impacto.tipoImpacto}" />  
+
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Equipa atribuida" /> 
+                                <p:selectOneMenu id="sltEquipa" filter="true" filterMatchMode="startsWith" value="#{ticketBean.equipa.codigoEquipa}">  
+                                    <f:selectItems value="#{listagemBean.equipas}" var="equipa" itemValue="#{equipa.codigoEquipa}" itemLabel="#{equipa.nomeEquipa}" />  
+                                </p:selectOneMenu>                        
+
+                                <h:outputLabel value="Prioridade" /> 
+                                <p:selectOneMenu id="sltPrioridade" filter="true" filterMatchMode="startsWith" value="#{ticketBean.prioridade.codigoPrioridade}">  
+                                    <f:selectItems value="#{listagemBean.prioridades}" var="prioridade" itemValue="#{prioridade.codigoPrioridade}" itemLabel="#{prioridade.tipoPrioridade}" />  
+                                </p:selectOneMenu> 
+
+                                <h:outputLabel value="Data do problema" /> 
+                                <p:calendar  id="txtDataProblema" pattern="dd-MM-yyyy" locale="pt" value="#{ticketBean.ticket.dataProblemaTicket}"/>
+
+                                <h:outputLabel value="Descrição"  />
+                                <p:inputTextarea value="#{ticketBean.ticket.descricaoTicket}" />
+                                
+                                <p:growl id="mensagemNovoTicket" showDetail="true" severity="info"/>
+                                <p:commandButton value="Guardar" actionListener="#{ticketBean.guardar}" update="mensagemNovoTicket, tabelaTickets" onclick="dialogNovoTicket.hide()"/>  
+
+                            </p:panelGrid>
+                        
+                    </p:dialog>
+                </div>
+
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

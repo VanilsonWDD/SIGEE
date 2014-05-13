@@ -23,19 +23,14 @@ public class EquipaFuncionarioPK implements Serializable {
     private int codigoEquipaFuncionario;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codigo_funcionario")
-    private int codigoFuncionario;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "codigo_equipa")
     private int codigoEquipa;
 
     public EquipaFuncionarioPK() {
     }
 
-    public EquipaFuncionarioPK(int codigoEquipaFuncionario, int codigoFuncionario, int codigoEquipa) {
+    public EquipaFuncionarioPK(int codigoEquipaFuncionario, int codigoEquipa) {
         this.codigoEquipaFuncionario = codigoEquipaFuncionario;
-        this.codigoFuncionario = codigoFuncionario;
         this.codigoEquipa = codigoEquipa;
     }
 
@@ -45,14 +40,6 @@ public class EquipaFuncionarioPK implements Serializable {
 
     public void setCodigoEquipaFuncionario(int codigoEquipaFuncionario) {
         this.codigoEquipaFuncionario = codigoEquipaFuncionario;
-    }
-
-    public int getCodigoFuncionario() {
-        return codigoFuncionario;
-    }
-
-    public void setCodigoFuncionario(int codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
     }
 
     public int getCodigoEquipa() {
@@ -67,7 +54,6 @@ public class EquipaFuncionarioPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) codigoEquipaFuncionario;
-        hash += (int) codigoFuncionario;
         hash += (int) codigoEquipa;
         return hash;
     }
@@ -82,9 +68,6 @@ public class EquipaFuncionarioPK implements Serializable {
         if (this.codigoEquipaFuncionario != other.codigoEquipaFuncionario) {
             return false;
         }
-        if (this.codigoFuncionario != other.codigoFuncionario) {
-            return false;
-        }
         if (this.codigoEquipa != other.codigoEquipa) {
             return false;
         }
@@ -93,7 +76,7 @@ public class EquipaFuncionarioPK implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.EquipaFuncionarioPK[ codigoEquipaFuncionario=" + codigoEquipaFuncionario + ", codigoFuncionario=" + codigoFuncionario + ", codigoEquipa=" + codigoEquipa + " ]";
+        return "modelo.EquipaFuncionarioPK[ codigoEquipaFuncionario=" + codigoEquipaFuncionario + ", codigoEquipa=" + codigoEquipa + " ]";
     }
     
 }

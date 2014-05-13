@@ -29,9 +29,8 @@ public class TipoSiteFacade extends AbstractFacade<TipoSite> {
     public TipoSiteFacade() {
         super(TipoSite.class);
     }
-
     public TipoSite getTipoSitePorCodigo(int codigoTipoSite){
         Query q = em.createQuery("SELECT ts FROM TipoSite ts WHERE ts.codigoTipoSite = '"+ codigoTipoSite +"'");
         return (TipoSite)q.getSingleResult();        
-    } 
+    }    
 }

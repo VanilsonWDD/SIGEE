@@ -9,6 +9,7 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.Ticket;
 
 /**
@@ -28,5 +29,8 @@ public class TicketFacade extends AbstractFacade<Ticket> {
     public TicketFacade() {
         super(Ticket.class);
     }
-    
+    public Ticket getTicketPorCodigo(int codigoTicket){
+        Query q = em.createQuery("SELECT t FROM Ticket t WHERE t.codigoTicket = '"+ codigoTicket +"'");
+        return (Ticket)q.getSingleResult();        
+    }      
 }

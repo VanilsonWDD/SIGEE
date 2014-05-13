@@ -29,9 +29,8 @@ public class PrioridadeFacade extends AbstractFacade<Prioridade> {
     public PrioridadeFacade() {
         super(Prioridade.class);
     }
-    
     public Prioridade getPrioridadePorCodigo(int codigoPrioridade){
         Query q = em.createQuery("SELECT p FROM Prioridade p WHERE p.codigoPrioridade = '"+ codigoPrioridade +"'");
         return (Prioridade)q.getSingleResult();        
-    }      
+    }       
 }

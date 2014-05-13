@@ -26,18 +26,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EquipaFuncionario.findAll", query = "SELECT e FROM EquipaFuncionario e"),
     @NamedQuery(name = "EquipaFuncionario.findByCodigoEquipaFuncionario", query = "SELECT e FROM EquipaFuncionario e WHERE e.equipaFuncionarioPK.codigoEquipaFuncionario = :codigoEquipaFuncionario"),
-    @NamedQuery(name = "EquipaFuncionario.findByCodigoFuncionario", query = "SELECT e FROM EquipaFuncionario e WHERE e.equipaFuncionarioPK.codigoFuncionario = :codigoFuncionario"),
     @NamedQuery(name = "EquipaFuncionario.findByCodigoEquipa", query = "SELECT e FROM EquipaFuncionario e WHERE e.equipaFuncionarioPK.codigoEquipa = :codigoEquipa")})
 public class EquipaFuncionario implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected EquipaFuncionarioPK equipaFuncionarioPK;
-    @JoinColumn(name = "codigo_funcionario", referencedColumnName = "codigo_funcionario", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Funcionario funcionario;
     @JoinColumn(name = "codigo_equipa", referencedColumnName = "codigo_equipa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Equipa equipa;
+    @JoinColumn(name = "pk_funcionario", referencedColumnName = "pk_funcionario")
+    @ManyToOne(optional = false)
+    private TbFuncionario pkFuncionario;
 
     public EquipaFuncionario() {
     }
@@ -46,8 +45,8 @@ public class EquipaFuncionario implements Serializable {
         this.equipaFuncionarioPK = equipaFuncionarioPK;
     }
 
-    public EquipaFuncionario(int codigoEquipaFuncionario, int codigoFuncionario, int codigoEquipa) {
-        this.equipaFuncionarioPK = new EquipaFuncionarioPK(codigoEquipaFuncionario, codigoFuncionario, codigoEquipa);
+    public EquipaFuncionario(int codigoEquipaFuncionario, int codigoEquipa) {
+        this.equipaFuncionarioPK = new EquipaFuncionarioPK(codigoEquipaFuncionario, codigoEquipa);
     }
 
     public EquipaFuncionarioPK getEquipaFuncionarioPK() {
@@ -58,20 +57,20 @@ public class EquipaFuncionario implements Serializable {
         this.equipaFuncionarioPK = equipaFuncionarioPK;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
     public Equipa getEquipa() {
         return equipa;
     }
 
     public void setEquipa(Equipa equipa) {
         this.equipa = equipa;
+    }
+
+    public TbFuncionario getPkFuncionario() {
+        return pkFuncionario;
+    }
+
+    public void setPkFuncionario(TbFuncionario pkFuncionario) {
+        this.pkFuncionario = pkFuncionario;
     }
 
     @Override

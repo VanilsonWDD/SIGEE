@@ -29,9 +29,8 @@ public class SiteFacade extends AbstractFacade<Site> {
     public SiteFacade() {
         super(Site.class);
     }
-
     public Site getSitePorCodigo(int codigoSite){
         Query q = em.createQuery("SELECT s FROM Site s WHERE s.codigoSite = '"+ codigoSite +"'");
         return (Site)q.getSingleResult();        
-    }  
+    }     
 }

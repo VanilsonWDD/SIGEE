@@ -29,9 +29,8 @@ public class ImpactoFacade extends AbstractFacade<Impacto> {
     public ImpactoFacade() {
         super(Impacto.class);
     }
-
     public Impacto getImpactoPorCodigo(int codigoImpacto){
         Query q = em.createQuery("SELECT i FROM Impacto i WHERE i.codigoImpacto = '"+ codigoImpacto +"'");
         return (Impacto)q.getSingleResult();        
-    }
+    }    
 }

@@ -9,14 +9,14 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import modelo.EstadoFechoTicket;
+import modelo.TbExperienciaTrabalho;
 
 /**
  *
  * @author Vanilson
  */
 @Stateless
-public class EstadoFechoTicketFacade extends AbstractFacade<EstadoFechoTicket> {
+public class TbExperienciaTrabalhoFacade extends AbstractFacade<TbExperienciaTrabalho> {
     @PersistenceContext(unitName = "SIGEE-ejbPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class EstadoFechoTicketFacade extends AbstractFacade<EstadoFechoTicket> {
         return em;
     }
 
-    public EstadoFechoTicketFacade() {
-        super(EstadoFechoTicket.class);
+    public TbExperienciaTrabalhoFacade() {
+        super(TbExperienciaTrabalho.class);
     }
     
 }

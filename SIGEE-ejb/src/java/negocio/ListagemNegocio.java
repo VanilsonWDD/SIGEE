@@ -8,21 +8,27 @@ package negocio;
 
 import dao.EquipaFacade;
 import dao.EstadoFacade;
-import dao.FuncionarioFacade;
+import dao.TbFuncionarioFacade;
 import dao.ImpactoFacade;
 import dao.PrioridadeFacade;
 import dao.SiteFacade;
+import dao.TicketFacade;
+import dao.TipoAnomaliaFacade;
 import dao.TipoSiteFacade;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.persistence.Query;
 import modelo.Equipa;
 import modelo.Estado;
-import modelo.Funcionario;
+import modelo.TbFuncionario;
 import modelo.Impacto;
 import modelo.Prioridade;
 import modelo.Site;
+import modelo.Ticket;
+import modelo.TipoAnomalia;
 import modelo.TipoSite;
 
 /**
@@ -33,6 +39,10 @@ import modelo.TipoSite;
 @LocalBean
 public class ListagemNegocio {
     @EJB
+    private TicketFacade ticketFacade;
+    @EJB
+    private TipoAnomaliaFacade tipoAnomaliaFacade;
+    @EJB
     private TipoSiteFacade tipoSiteFacade;
     @EJB
     private EstadoFacade estadoFacade;
@@ -41,7 +51,7 @@ public class ListagemNegocio {
     @EJB
     private EquipaFacade equipaFacade;
     @EJB
-    private FuncionarioFacade funcionarioFacade;
+    private TbFuncionarioFacade funcionarioFacade;
     @EJB
     private SiteFacade siteFacade;
     @EJB
@@ -50,7 +60,7 @@ public class ListagemNegocio {
     public List<Site> getSites(){
         return siteFacade.findAll();
     }
-    public List<Funcionario> getFuncionarios(){
+    public List<TbFuncionario> getFuncionarios(){
         return funcionarioFacade.findAll();
     }
     public List<Impacto> getImpactos(){
@@ -67,5 +77,11 @@ public class ListagemNegocio {
     } 
     public List<TipoSite> getTipoSites(){
         return tipoSiteFacade.findAll();
+    }
+    public List<TipoAnomalia> getTipoAnomalia(){
+        return tipoAnomaliaFacade.findAll();
+    }
+    public List<Ticket> getTickets(){
+        return ticketFacade.findAll();
     }
 }

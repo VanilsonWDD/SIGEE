@@ -37,12 +37,12 @@ public class EquipaResponsavel implements Serializable {
     @Basic(optional = false)
     @Column(name = "codigo_equipa_responsavel")
     private Integer codigoEquipaResponsavel;
-    @JoinColumn(name = "codigo_funcionario", referencedColumnName = "codigo_funcionario")
-    @ManyToOne(optional = false)
-    private Funcionario codigoFuncionario;
     @JoinColumn(name = "codigo_equipa", referencedColumnName = "codigo_equipa")
     @ManyToOne(optional = false)
     private Equipa codigoEquipa;
+    @JoinColumn(name = "pk_funcionario", referencedColumnName = "pk_funcionario")
+    @ManyToOne(optional = false)
+    private TbFuncionario pkFuncionario;
 
     public EquipaResponsavel() {
     }
@@ -59,20 +59,20 @@ public class EquipaResponsavel implements Serializable {
         this.codigoEquipaResponsavel = codigoEquipaResponsavel;
     }
 
-    public Funcionario getCodigoFuncionario() {
-        return codigoFuncionario;
-    }
-
-    public void setCodigoFuncionario(Funcionario codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
-    }
-
     public Equipa getCodigoEquipa() {
         return codigoEquipa;
     }
 
     public void setCodigoEquipa(Equipa codigoEquipa) {
         this.codigoEquipa = codigoEquipa;
+    }
+
+    public TbFuncionario getPkFuncionario() {
+        return pkFuncionario;
+    }
+
+    public void setPkFuncionario(TbFuncionario pkFuncionario) {
+        this.pkFuncionario = pkFuncionario;
     }
 
     @Override

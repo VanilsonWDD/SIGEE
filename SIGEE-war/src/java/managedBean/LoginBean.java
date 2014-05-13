@@ -6,7 +6,7 @@
 
 package managedBean;
 
-import dao.FuncionarioFacade;
+import dao.TbFuncionarioFacade;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -14,7 +14,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import modelo.Funcionario;
+import modelo.Login;
+import modelo.Perfil;
+import modelo.TbFuncionario;
+import util.Criptografia;
 
 /**
  *
@@ -24,7 +27,7 @@ import modelo.Funcionario;
 @SessionScoped
 public class LoginBean {
     @EJB
-    private FuncionarioFacade funcionarioFacade;
+    private TbFuncionarioFacade funcionarioFacade;
 
     /**
      * Creates a new instance of LoginBean
@@ -38,15 +41,34 @@ public class LoginBean {
     public void login(){
         try{
             FacesContext fc = FacesContext.getCurrentInstance();
-            Funcionario f = new Funcionario();
-            List<Funcionario> lf = funcionarioFacade.login(username, senha);
+            TbFuncionario f = new TbFuncionario();
+            Login l = new Login();
+            Perfil p = new Perfil();
+            
+            List<Login> lf = funcionarioFacade.login(username, Criptografia.encriptar(senha));
             if(!lf.isEmpty()){
-                HttpSession sessao = (HttpSession) fc.getExternalContext().getSession(true);
-                f.setNomeFuncionario(lf.get(0).getNomeFuncionario());
-                sessao.setAttribute("sessao", f);
-                fc.getExternalContext().redirect("paginas/modulos.xhtml");
+                String perfil = funcionarioFacade.getPerfil(username, Criptografia.encriptar(senha));
+                if(perfil.equals("Administrador(a)")){
+                    
+                    HttpSession sessaoAdministrador = (HttpSession) fc.getExternalContext().getSession(true);
+                    f.setNomeCompleto(lf.get(0).getPkFuncionario().getNomeCompleto());
+                    l.setPkFuncionario(f);
+                    p.setTipoPerfil("Administrador(a)");
+                    l.setCodigoPerfil(p);
+                    sessaoAdministrador.setAttribute("sessao", l);
+                    fc.getExternalContext().redirect("paginas/modulos.xhtml");
+                }
+                else if(perfil.equals("Funcionário(a)")){
+                    HttpSession sessaoAdministrador = (HttpSession) fc.getExternalContext().getSession(true);
+                    f.setNomeCompleto(lf.get(0).getPkFuncionario().getNomeCompleto());
+                    l.setPkFuncionario(f);
+                    p.setTipoPerfil("Funcionário(a)");
+                    l.setCodigoPerfil(p);
+                    sessaoAdministrador.setAttribute("sessao", l);
+                    fc.getExternalContext().redirect("paginas/modulos.xhtml");                   
+                }
             }
-            else 
+            else
                 fc.addMessage(null, new FacesMessage("Login", "Login errado, verifique o username e senha"));
         }
         catch(Exception e){

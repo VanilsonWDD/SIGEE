@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./masterPageManutencao.xhtml">
+    <ui:define name="content">
+        <h:form id = "form">
+           <div class ="sites">
+                <div class = "btn-novo">
+                    <p:commandButton value = "Nova intervenção" onclick="dialogNovoSite.show()" id = "novo"></p:commandButton>
+                </div>
+                <div class = "visualizar">
+                
+
+                    <p:dataTable id="tabelaIntervencoes" value="#{fechoTicketBean.ticketsFechados}" var="ticketFechados" scrollWidth="1000"
+                     paginator="true" rows="15"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"  
+                     scrollable="true" scrollHeight="410" currentPageReportTemplate="Pagina {currentPage} de {totalPages}, {totalRecords} intervenções registadas">
+                        <p:column styleClass="largura-site-descricao">
+                            <f:facet name="header">
+                                <h:outputText value="Ticket"/>
+                            </f:facet>
+                            <h:outputText value="#{ticketFechados.codigoTicket.descricaoTicket}"/>
+                        </p:column>
+                        <p:column styleClass="largura-site-descricao">
+                            <f:facet name="header">
+                                <h:outputText value="Comentário"/>
+                            </f:facet>
+                            <h:outputText value="#{ticketFechados.comentarioFechoTicket}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data"/>
+                            </f:facet>
+                            <h:outputText value="#{ticketFechados.dataFechoTicket}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <h:outputText value="#{ticketFechados.codigoEstado.tipoEstado}"/>
+                        </p:column>                         
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Opções"/>
+                            </f:facet>
+                            <p:growl id="mensagemEliminarIntervencao" showDetail="true" severity="info"/>
+                            <p:commandButton id="btn-eliminar" icon="eliminar-icon" onclick="dialogEliminarIntervencao.show()" title="Eliminar"/>
+                            <p:confirmDialog message="Tem a certeza que deseja eliminar a intervenção?" header="Eliminar intervenção" severity="alert"
+                                             widgetVar="dialogEliminarIntervencao" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" actionListener="#{intervencaoBean.eliminar(intervencao.codigoIntervencao)}" onclick="dialogEliminarIntervencao.hide()" 
+                                                 update="mensagemEliminarIntervencao, tabelaIntervencoes" styleClass="btn-eliminar-sim"/>
+                                <p:commandButton value="Não" type="button" onclick="dialogEliminarIntervencao.hide()" styleClass="btn-eliminar-nao"/>
+                            </p:confirmDialog>
+                            <p:commandButton id="btn-actualizar" icon="actualizar-icon" update=":form:actualizarIntervencao" oncomplete="dialogActualizarIntervencao.show()" title="actualizar">
+                                <f:setPropertyActionListener value="#{intervencao}" target="#{intervencaoBean.intervencao}"/>
+                            </p:commandButton>
+                            <p:commandButton id="btn-ver-dados" icon="ver-dados-icon" update=":form:dadosIntervencao" oncomplete="dialogDadosIntervencao.show()" title="Ver todos os dados">
+                                <f:setPropertyActionListener value="#{intervencao}" target="#{intervencaoBean.intervencao}"/>
+                            </p:commandButton>                            
+                        </p:column> 
+                    </p:dataTable>
+                </div>
+                <div class = "dialog">
+                    <div class ="ver-dados">
+                        <p:dialog header="Dados da intervenção" widgetVar="dialogDadosIntervencao"  
+                                  showEffect="fade" hideEffect="fade" width="380" modal="true" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                            <h:panelGrid id="dadosIntervencao" columns="2">
+                                    <h:outputLabel value="Ticket:" styleClass="texto-negrito"/>  
+                                    <h:outputLabel value="#{intervencaoBean.intervencao.codigoTicket.descricaoTicket}"/>
+                                    
+                                    <h:outputLabel value="Data:" styleClass="texto-negrito"/>  
+                                    <h:outputLabel value="#{intervencaoBean.intervencao.dataIntervencao}"/>
+
+                                    <h:outputLabel value="Comentario:" styleClass="texto-negrito"/> 
+                                    <h:outputLabel value="#{intervencaoBean.intervencao.comentarioIntervencao}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                    <p:dialog widgetVar="dialogNovoSite" showEffect="fade" hideEffect="fade" header="Registar intervenção" width="615" closeOnEscape="true" modal="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                        
+                            <p:panelGrid columns="2"> 
+                                <h:outputLabel value="Ticket" /> 
+                                <p:selectOneMenu id="sltTicket" filter="true" filterMatchMode="startsWith" value="#{intervencaoBean.ticket.codigoTicket}">  
+                                    <f:selectItems value="#{listagemBean.tickets}" var="ticket" itemValue="#{ticket.codigoTicket}" itemLabel="#{ticket.descricaoTicket}" />  
+                                </p:selectOneMenu> 
+                                <h:outputLabel value="Data da intervenção" /> 
+                                <p:calendar  id="txtDataProblemaNovo" pattern="dd-MM-yyyy" locale="pt" value="#{intervencaoBean.intervencao.dataIntervencao}"/>
+
+                                <h:outputLabel value="Comentário"  />
+                                <p:inputTextarea value="#{intervencaoBean.intervencao.comentarioIntervencao}" />
+                                <p:growl id="mensagem" showDetail="true" severity="info" life="5000"/>
+                                <p:commandButton value="Guardar" actionListener="#{intervencaoBean.guardar}" update="mensagem, tabelaIntervencoes" onclick="dialogNovoSite.hide()"/>  
+
+                            </p:panelGrid>
+                        
+                    </p:dialog>
+                    <p:dialog widgetVar="dialogActualizarIntervencao" modal="true" showEffect="fade" hideEffect="fade" header="Actualizar dados da intervenção" width="615" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                             <p:panelGrid columns="2" id = "actualizarIntervencao"> 
+
+
+                            </p:panelGrid>                       
+                        
+                    </p:dialog>
+                </div>
+
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

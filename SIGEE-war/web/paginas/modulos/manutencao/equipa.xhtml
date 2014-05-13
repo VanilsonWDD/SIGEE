@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./masterPageManutencao.xhtml">
+            <ui:define name="content">
+                <h:form id="form">
+            <!--<div class="titulo">
+                <h3>Ticket</h3>
+            </div>-->
+            
+            <div class ="tickets">
+                <div class = "btn-novo">
+                    <p:commandButton value = "Nova equipa" onclick="dialogNovoTicket.show()" id="novo"></p:commandButton>&nbsp;
+                   <!-- <p:commandButton value = "Eliminar ticket" styleClass="btn-eliminar"></p:commandButton>-->
+                </div>
+                <div class = "visualizar">
+                
+                    
+                    <p:dataTable id="tabelaTickets" value="#{equipaBean.equipas}" var="equipa" scrollWidth="1000"
+                     paginator="true" rows="15"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}  {NextPageLink} {LastPageLink}"  
+                     scrollable="true" scrollHeight="410" currentPageReportTemplate="Pagina {currentPage} de {totalPages}, {totalRecords} equipas registadas"
+                     editable="true">
+                        
+                        <!--<p:column selectionMode="multiple" style="width:3%" id="chkDelete" styleClass="chkDelete"/>-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nome da equipa"/>
+                            </f:facet>
+                            <h:outputText value="#{equipa.nomeEquipa}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Opções"/>
+                            </f:facet>
+                            <p:growl id="mensagemEliminarEquipa" showDetail="true" severity="info"/>
+                            <p:commandButton id="btn-eliminar" onclick="dialogEliminarTicket.show()" icon="eliminar-icon" title="Eliminar"/>
+                            <p:confirmDialog message="Tem a certeza que deseja eliminar a equipe?" header="Eliminar equipe" severity="alert"
+                                             widgetVar="dialogEliminarTicket" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" actionListener="#{equipaBean.eliminar(equipa.codigoEquipa)}" onclick="dialogEliminarTicket.hide()" 
+                                                 update="mensagemEliminarEquipa, tabelaTickets" styleClass="btn-eliminar-sim"/>
+                                <p:commandButton value="Não" type="button" onclick="dialogEliminarTicket.hide()" styleClass="btn-eliminar-nao"/>
+                            </p:confirmDialog>                   
+                            <p:commandButton id="btn-actualizar" icon="actualizar-icon" update=":form:actualizarTicket" oncomplete="dialogActualizarTicket.show()" title="actualizar">
+                                <f:setPropertyActionListener value="#{ticket}" target="#{ticketBean.ticket}"/>
+                            </p:commandButton>
+                            <p:commandButton id="btn-ver-dados" actionListener="#{equipaBean.getEquipaFuncionarioPorCodigo(equipa.codigoEquipa)}" icon="ver-dados-icon" update=":form:dadosEquipa" oncomplete="dialogDadosTicket.show()" title="Ver todos os dados">
+                                <f:setPropertyActionListener value="#{equipa}" target="#{equipaBean.equipa}"/>
+                            </p:commandButton>
+                            
+
+                        </p:column> 
+                    </p:dataTable>
+                
+
+                </div>
+                <div class = "dialog">
+                    <div class ="ver-dados-equipa">
+                        
+                        <p:dialog header="Dados das equipes" widgetVar="dialogDadosTicket"  
+                                  showEffect="fade" hideEffect="fade" width="380" modal="true" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                            <h:panelGrid id="dadosEquipa" columns="1">
+                                <h:outputLabel value="#{equipaBean.equipa.nomeEquipa}" />
+                                <p:dataList value="#{equipaBean.lef}" var="equipa" itemType="disc">
+                                    #{equipa.pkFuncionario.nomeCompleto}
+                                </p:dataList>    
+
+                            </h:panelGrid>
+                        </p:dialog>
+                        
+                    </div>
+                    <div class="actualizar-dados">
+                        
+                        <p:dialog header="Actualizar dados do ticket" widgetVar="dialogActualizarTicket"
+                                  showEffect="fade" hideEffect="fade" width="585" modal="true" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+                            <h:panelGrid id="actualizarTicket" columns="2">
+                                <p:dataList id="dadosEquipaFuncionario" value="#{equipaBean.lef}" var="equipa" type="ordered" emptyMessage="Não existe nenhum funcionario associado a essa equipe">
+                                    #{equipa.pkFuncionario.nomeCompleto}
+                                </p:dataList>
+
+                            </h:panelGrid>
+                        </p:dialog>
+                       
+                    </div>
+                    <div class ="nova-equipe">
+                      
+                        <p:dialog widgetVar="dialogNovoTicket" modal="true" showEffect="fade" hideEffect="fade" header="Criação de nova equipe" width="800" closeOnEscape="true" resizable="false" footer="Pressiona a tecla ESC para fechar ou clique em X">
+
+                                <p:panelGrid>
+                                    
+                                    <p:row>
+                                        <p:column>
+                                            
+                                                <h:outputLabel value="Nome da equipe"  />
+                                            
+                                        </p:column>
+                                        <p:column>
+                                            
+                                            <p:inputText value="#{equipaBean.equipa.nomeEquipa}" style="width: 580px; margin-left: 12px"/>
+                                            
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            
+                                                <h:outputLabel value="Funcionários"  />
+                                            
+                                        </p:column>
+                                        <p:column>
+                                            
+                                                <p:pickList value="#{equipaBean.listagemFuncionarios}" var="funcionario" itemLabel="#{funcionario.nomeCompleto}" itemValue="#{funcionario}" 
+                                                         converter="pickListConverter" effect="slide" showSourceFilter="true" showTargetFilter="true" showSourceControls="true" showTargetControls="true" showCheckbox="true" filterMatchMode="contains"/>
+                                            
+                                        </p:column>
+                                    </p:row>
+                                   
+                                   
+                                    <p:row>
+                                        
+                                        <p:column></p:column>
+                                        <p:column>
+                                            <p:growl id="mensagemNovaEquipa" showDetail="true" severity="info"/>
+                                            <p:commandButton value="Guardar" update="mensagemNovaEquipa, tabelaTickets" action="#{equipaBean.guardarEquipa}" onclick="dialogNovoTicket.hide()"  style="margin-left: 12px;"/>
+                                            
+                                        </p:column>
+                                            
+                                    </p:row>
+                                    
+                                </p:panelGrid>
+
+                        </p:dialog>
+                        
+                    </div>
+                </div>
+
+            </div>
+            </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

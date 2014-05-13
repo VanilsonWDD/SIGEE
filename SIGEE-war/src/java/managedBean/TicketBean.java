@@ -8,7 +8,7 @@ package managedBean;
 
 import dao.EquipaFacade;
 import dao.EstadoFacade;
-import dao.FuncionarioFacade;
+import dao.TbFuncionarioFacade;
 import dao.ImpactoFacade;
 import dao.PrioridadeFacade;
 import dao.SiteFacade;
@@ -20,7 +20,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Equipa;
 import modelo.Estado;
-import modelo.Funcionario;
+import modelo.TbFuncionario;
 import modelo.Impacto;
 import modelo.Prioridade;
 import modelo.Site;
@@ -43,12 +43,13 @@ public class TicketBean {
     @EJB
     private ImpactoFacade impactoFacade;
     @EJB
-    private FuncionarioFacade funcionarioFacade;
+    private TbFuncionarioFacade funcionarioFacade;
     @EJB
     private SiteFacade siteFacade;
     @EJB
     private TicketNegocio ticketNegocio;
-  
+
+    
     private List<Ticket> lt;
     Ticket ticket;
     Site site;
@@ -56,14 +57,15 @@ public class TicketBean {
     Equipa equipa;
     Prioridade prioridade;
     Estado estado;
-    Funcionario funcionario;
+    TbFuncionario funcionario;
+    private final int ESTADO = 2;
     /**
      * Creates a new instance of TicketBean
      */
     public TicketBean() {
         ticket = new Ticket();
         site = new Site();
-        funcionario = new Funcionario();
+        funcionario = new TbFuncionario();
         impacto = new Impacto();
         estado = new Estado();
         prioridade = new Prioridade();
@@ -76,21 +78,20 @@ public class TicketBean {
         
         FacesContext fc = FacesContext.getCurrentInstance(); 
         int codigoSite = site.getCodigoSite();
-        int codigoFuncionario = funcionario.getCodigoFuncionario();
+        int codigoFuncionario = funcionario.getPkFuncionario();
         int codigoEquipa = equipa.getCodigoEquipa();
         int codigoImpacto = impacto.getCodigoImpacto();
         int codigoPrioridade = prioridade.getCodigoPrioridade();
-        int codigoEstado = estado.getCodigoEstado();
         
         site = siteFacade.getSitePorCodigo(codigoSite);
         funcionario = funcionarioFacade.getFuncionarioPorCodigo(codigoFuncionario);
         equipa = equipaFacade.getEquipaPorCodigo(codigoEquipa);
         impacto = impactoFacade.getImpactoPorCodigo(codigoImpacto);
         prioridade = prioridadeFacade.getPrioridadePorCodigo(codigoPrioridade);
-        estado = estadoFacade.getEstadoPorCodigo(codigoEstado);
+        estado.setCodigoEstado(ESTADO);
         
         ticket.setCodigoSite(site);
-        ticket.setCodigoFuncionario(funcionario);
+        ticket.setPkFuncionario(funcionario);
         ticket.setCodigoEquipa(equipa);
         ticket.setCodigoImpacto(impacto);
         ticket.setCodigoPrioridade(prioridade);
@@ -102,11 +103,12 @@ public class TicketBean {
         
     }
     public void actualizar(){
-        ticket.setDescricaoTicket("actualizar dados");
-        System.out.println("Lorem ipsum");
+        
     }
     public void eliminar(int codigoTicket){
+        FacesContext fc = FacesContext.getCurrentInstance();
         ticketNegocio.eliminar(codigoTicket);
+        fc.addMessage(null, new FacesMessage("Ticket", "O ticket foi eliminado com sucesso"));  
     }
     public List<Ticket> getTickets(){
         lt = ticketNegocio.getTickets();
@@ -128,11 +130,11 @@ public class TicketBean {
         this.site = site;
     }
 
-    public Funcionario getFuncionario() {
+    public TbFuncionario getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(Funcionario funcionario) {
+    public void setFuncionario(TbFuncionario funcionario) {
         this.funcionario = funcionario;
     }
 

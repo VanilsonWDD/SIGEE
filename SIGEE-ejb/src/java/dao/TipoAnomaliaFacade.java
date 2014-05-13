@@ -9,6 +9,7 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.TipoAnomalia;
 
 /**
@@ -28,5 +29,8 @@ public class TipoAnomaliaFacade extends AbstractFacade<TipoAnomalia> {
     public TipoAnomaliaFacade() {
         super(TipoAnomalia.class);
     }
-    
+    public TipoAnomalia getTipoAnomaliaPorCodigo(int codigoTipoAnomalia){
+        Query q = em.createQuery("SELECT ta FROM TipoAnomalia ta WHERE ta.codigoTipoAnomalia = '"+ codigoTipoAnomalia +"'");
+        return (TipoAnomalia)q.getSingleResult();        
+    }        
 }

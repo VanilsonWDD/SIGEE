@@ -129,9 +129,19 @@ textarea {
     background-color: #11b4f5;
     border-radius: 0;
 }
-.btn-novo .ui-button:hover{
-    background-color: #222323;
+.btn-novo .ui-button:hover, .btn-upload:hover{
+    background-color: #222323 !important;
 }
+.btn-upload{
+    -webkit-transition: background-color 0.3s ease-in-out !important;
+    -moz-transition: background-color 0.3s ease-in-out !important;
+    -o-transition: background-color 0.3s ease-in-out !important;
+    background-color: #11b4f5 !important;
+    border-radius: 0 !important;
+    color: #FFFFFF !important;
+    width: 507px !important;
+}
+
 .bnt-novo .ui-corner-all{
     background-color: #11b4f5;
     border-radius: 0;
@@ -155,11 +165,11 @@ textarea {
     background-color: #f5f4f4;
 }
 .dialog .ui-dialog-titlebar{
-    font: 16px 'OpenSansLight';
+    font: 14px 'OpenSansBold';
 }
 .dialog .ui-dialog{
     border-radius: 0;
-    box-shadow: 1px 1px 30px rgba(34,35,35, .2) !important;
+    _box-shadow: 1px 1px 30px rgba(34,35,35, .2) !important;
     border: 1px solid #c4c4c4;
 }
 .dialog table tr td{
@@ -194,6 +204,17 @@ textarea {
 .dialog table tbody tr td{
     color: #222323;
     font: 14px 'OpenSansLight';
+}
+.dialog .actualizar-dados table tbody tr td{
+    padding-top: 8px;
+    padding-left: 14px;
+}
+.dialog .ver-dados table tbody tr td{
+    padding-top: 8px;
+    padding-left: 14px;
+}
+.texto-negrito{
+    font: 14px 'OpenSansBold';
 }
 .ui-widget{
    box-shadow: none !important; 
@@ -365,6 +386,11 @@ textarea {
     background-image: url("../img/actualizar-icon.png")  !important; 
     background-position: center;
 }
+.foto-icon{
+    background-image: url("../img/foto-icon.png")  !important; 
+    background-position: center; 
+    border-radius: 0 !important;
+}
 .ver-dados-icon{
     background-image: url("../img/dados-icon.png")  !important; 
     background-position: center;
@@ -389,12 +415,162 @@ textarea {
 .btn-eliminar:hover{
     background-color: #cd5f48 !important; 
 }
+.btn-eliminar-sim{
+    background-color: #f26c4f !important;
+    color: #FFFFFF !important;
+    -webkit-transition: background-color 0.3s ease-in-out !important;
+}
+.btn-eliminar-sim:hover{
+    background-color: #cd5f48 !important; 
+}
+.btn-eliminar-nao{
+    background-color: #e3e3e3 !important;
+    color: #222323 !important;
+    -webkit-transition: background-color 0.3s ease-in-out !important;
+}
+.btn-eliminar-nao:hover{
+    background-color: #222323 !important; 
+    color: #FFFFFF !important;
+}
+.ui-dialog-titlebar{
+    background-color: #f5f4f4 !important; 
+}
+.upload .ui-widget-header{
+    background: none !important;
+    border:none !important;
+}
+.upload .ui-button{
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+.upload .ui-corner-bottom, .sites .ui-widget-content{
+    border: none !important;
+}
+.sites .ui-widget-content{
+    -webkit-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+.sites .ui-widget-header{
+    background: none !important;
+}
+.sites .ui-dialog-titlebar{
+    background-color: #f5f4f4 !important;
+}
+.sites .ui-dialog-titlebar{
+    font: 14px 'OpenSansBold';
+}
+.upload .ui-fileupload-files{
+    font: 14px 'OpenSansBold';
+}
+ .fileupload-buttonbar .fileinput-button .ui-icon-plusthick,  
+ .fileupload-buttonbar .ui-icon-arrowreturnthick-1-n,
+ .fileupload-buttonbar .ui-icon-cancel{
+         display: none !important;
+ }
+  .fileupload-buttonbar .fileinput-button .ui-button-text,
+  .fileupload-buttonbar .ui-button-text{
+         padding: 0 !important;
+ }
+ .fileupload-buttonbar > .ui-button:nth-child(2){
+         background: none !important;
+         background-color: #11b4f5 !important;
+         color: #FFFFFF !important;
+         padding: 10px !important;
+         font: 14px 'OpenSansLight' !important;
+         font-weight: lighter !important;
+         text-shadow: none !important;
+         -webkit-transition: background-color 0.3s ease-in-out !important;
+         margin-left: 3px;
+         outline: none;
+ }
+  .fileupload-buttonbar > .ui-button:nth-child(3){
+         background: none !important;
+         background-color: #f26c4f !important;
+         color: #FFFFFF !important;
+         padding: 10px !important;
+         font: 14px 'OpenSansLight' !important;
+         font-weight: lighter !important;
+         text-shadow: none !important;
+         -webkit-transition: background-color 0.3s ease-in-out !important;
+         margin-left: 3px;
+         outline: none;
+ }
+ .fileupload-buttonbar > .ui-button:nth-child(2):hover{
+     background-color: #222323 !important;
+ }
+  .fileupload-buttonbar > .ui-button:nth-child(3):hover{
+     background-color: #cd5f48 !important;
+ }
+ .fileupload-buttonbar .fileinput-button
+ {
+         background: none !important;
+         background-color: #11b4f5 !important;
+         color: #FFFFFF !important;
+         padding: 10px !important;
+         font: 14px 'OpenSansLight' !important;
+         font-weight: lighter !important;
+         text-shadow: none !important;
+         -webkit-transition: background-color 0.3s ease-in-out !important;
+ }
+ .fileupload-buttonbar .fileinput-button:hover{
+     background-color: #222323 !important;
+ }
+ .files .ui-state-error{
+     background: none !important;
+     border: none !important;
+     background-color: #f26c4f !important;
+     color: #FFFFFF !important;
+     
+ }
+.ui-state-error .name, .ui-state-error .size, .ui-state-error .error{
+     color: #FFFFFF !important;
+ }
+ .files{
+     max-width: 760px !important;
+ }
+ .ui-picklist-list{
+     border: 1px solid #f5f4f4 !important;
+     border-radius: 0 !important;
+ }
+ .ui-picklist-caption{
+     font: 14px 'OpenSansBold' !important;
+     border: none !important;
+     background-color: #f5f4f4 !important;
+     text-align: left !important;
+     border-radius: 0 !important;
+     text-shadow: none !important;
+     padding: 10px !important;
+ }
+ .ui-picklist-filter{
+     padding-right: 14px !important;
 
-
-
-
-
-
+ }
+ .ui-picklist-button-move-up, .ui-picklist-button-move-top, .ui-picklist-button-move-down, .ui-picklist-button-move-bottom,
+ .ui-picklist-button-add, .ui-picklist-button-add-all, .ui-picklist-button-remove, .ui-picklist-button-remove-all{
+     background-color: #f5f4f4 !important;
+ }
+ .ui-corner-all{
+     border-radius: 0 !important;
+ }
+ .ui-datalist-content ul{
+     list-style: none;
+     margin: 0;
+     padding: 0;
+     font-family: 'OpenSansLight';
+     margin-top: 10px;
+ }
+ .ver-dados-equipa table tr td label{
+     font-family: 'OpenSansBold';
+     font-size: 18px;
+ }
+ .ui-datalist-empty-message{
+     margin-left: -10px;
+     font-family: 'OpenSansLight';
+     margin-top: 10px;    
+ }
 /* ==========================================================================
    Helper classes
    ========================================================================== */

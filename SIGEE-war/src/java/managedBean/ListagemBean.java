@@ -6,19 +6,22 @@
 
 package managedBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import modelo.Equipa;
 import modelo.Estado;
-import modelo.Funcionario;
+import modelo.TbFuncionario;
 import modelo.Impacto;
 import modelo.Prioridade;
 import modelo.Site;
 import modelo.Ticket;
+import modelo.TipoAnomalia;
 import modelo.TipoSite;
 import negocio.ListagemNegocio;
+import org.primefaces.model.DualListModel;
 
 
 /**
@@ -26,17 +29,20 @@ import negocio.ListagemNegocio;
  * @author Vanilson
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ListagemBean {
     @EJB
-    private ListagemNegocio listagemNegocio;
+    private ListagemNegocio listagemNegocio = new ListagemNegocio();
+    
     private List<Site> ls;
-    private List<Funcionario> lf;
+    private List<TbFuncionario> lf;
     private List<Impacto> li;
     private List<Equipa> le;
     private List<Prioridade> lp;
     private List<Estado> les;
     private List<TipoSite> lts;
+    private List<TipoAnomalia> lta;
+    private List<Ticket> lt;
     private Site site;
     private Ticket ticket;
     private Funcionario funcionario;
@@ -45,9 +51,14 @@ public class ListagemBean {
     private Prioridade prioridade;
     private Estado estado;
     private TipoSite tipoSite;
+    private TipoAnomalia tipoAnamolia;
+    private DualListModel<TbFuncionario> listagemFuncionarios;
+   List<TbFuncionario> source = new ArrayList<TbFuncionario>();
+   List<TbFuncionario> target = new ArrayList<TbFuncionario>();
     /**
      * Creates a new instance of Ticket
      */
+    private String nome;
     public ListagemBean() {
         site = new Site();
     }
@@ -59,8 +70,22 @@ public class ListagemBean {
         ls = listagemNegocio.getSites();
         return ls;
     }
-
-    public List<Funcionario> getFuncionarios(){
+    public List<Ticket> getTickets(){
+        lt = listagemNegocio.getTickets();
+        return lt;
+    }
+    public DualListModel<TbFuncionario> getFuncionariosPickList(){
+        source = listagemNegocio.getFuncionarios();
+        listagemFuncionarios = new DualListModel<TbFuncionario>(source, target);
+        return listagemFuncionarios;
+    }
+    public void guardarEquipa(){
+        System.out.println("Chamou o metodo: " + getNome());
+        target = listagemFuncionarios.getTarget();
+        for(int i = 0; i < target.size(); i++)
+            System.out.println("Funcionarios: " + target.get(i));
+    }
+    public List<TbFuncionario> getFuncionarios(){
         lf = listagemNegocio.getFuncionarios();
         return lf;
     }
@@ -79,6 +104,10 @@ public class ListagemBean {
     public List<Estado> getEstados(){
         les = listagemNegocio.getEstados();
         return les;
+    }
+    public List<TipoAnomalia> getTipoAnomalias(){
+        lta = listagemNegocio.getTipoAnomalia();
+        return lta;
     }
     public Site getSite() {
         return site;
@@ -142,6 +171,30 @@ public class ListagemBean {
 
     public void setTipoSite(TipoSite tipoSite) {
         this.tipoSite = tipoSite;
+    }
+
+    public TipoAnomalia getTipoAnamolia() {
+        return tipoAnamolia;
+    }
+
+    public void setTipoAnamolia(TipoAnomalia tipoAnamolia) {
+        this.tipoAnamolia = tipoAnamolia;
+    }
+
+    public DualListModel<TbFuncionario> getListagemFuncionarios() {
+        return listagemFuncionarios;
+    }
+
+    public void setListagemFuncionarios(DualListModel<TbFuncionario> listagemFuncionarios) {
+        this.listagemFuncionarios = listagemFuncionarios;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
 }

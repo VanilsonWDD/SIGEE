@@ -9,14 +9,14 @@ package dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import modelo.FechoTicket;
+import modelo.TbTipoContrato;
 
 /**
  *
  * @author Vanilson
  */
 @Stateless
-public class FechoTicketFacade extends AbstractFacade<FechoTicket> {
+public class TbTipoContratoFacade extends AbstractFacade<TbTipoContrato> {
     @PersistenceContext(unitName = "SIGEE-ejbPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class FechoTicketFacade extends AbstractFacade<FechoTicket> {
         return em;
     }
 
-    public FechoTicketFacade() {
-        super(FechoTicket.class);
+    public TbTipoContratoFacade() {
+        super(TbTipoContrato.class);
     }
     
 }

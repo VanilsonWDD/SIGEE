@@ -29,9 +29,12 @@ public class EquipaFacade extends AbstractFacade<Equipa> {
     public EquipaFacade() {
         super(Equipa.class);
     }
-    
     public Equipa getEquipaPorCodigo(int codigoEquipa){
         Query q = em.createQuery("SELECT e FROM Equipa e WHERE e.codigoEquipa = '"+ codigoEquipa +"'");
         return (Equipa)q.getSingleResult();        
-    }    
+    } 
+    public int getUltimaEquipa(){
+        Query q = em.createQuery("SELECT MAX(e.codigoEquipa) FROM Equipa e");
+        return (int)q.getSingleResult();        
+    }   
 }

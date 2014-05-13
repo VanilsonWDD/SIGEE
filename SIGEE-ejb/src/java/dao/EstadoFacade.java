@@ -29,9 +29,8 @@ public class EstadoFacade extends AbstractFacade<Estado> {
     public EstadoFacade() {
         super(Estado.class);
     }
-
     public Estado getEstadoPorCodigo(int codigoEstado){
         Query q = em.createQuery("SELECT e FROM Estado e WHERE e.codigoEstado = '"+ codigoEstado +"'");
         return (Estado)q.getSingleResult();        
-    } 
+    }     
 }

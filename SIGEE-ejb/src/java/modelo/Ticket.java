@@ -7,10 +7,8 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,13 +19,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -54,12 +50,9 @@ public class Ticket implements Serializable {
     @Column(name = "data_problema_ticket")
     @Temporal(TemporalType.DATE)
     private Date dataProblemaTicket;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTicket")
-    private Collection<FechoTicket> fechoTicketCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTicket")
-    private Collection<Intervencao> intervencaoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTicket")
-    private Collection<SolucaoTicket> solucaoTicketCollection;
+    @JoinColumn(name = "pk_funcionario", referencedColumnName = "pk_funcionario")
+    @ManyToOne(optional = false)
+    private TbFuncionario pkFuncionario;
     @JoinColumn(name = "codigo_site", referencedColumnName = "codigo_site")
     @ManyToOne
     private Site codigoSite;
@@ -69,9 +62,6 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "codigo_impacto", referencedColumnName = "codigo_impacto")
     @ManyToOne
     private Impacto codigoImpacto;
-    @JoinColumn(name = "codigo_funcionario", referencedColumnName = "codigo_funcionario")
-    @ManyToOne
-    private Funcionario codigoFuncionario;
     @JoinColumn(name = "codigo_estado", referencedColumnName = "codigo_estado")
     @ManyToOne
     private Estado codigoEstado;
@@ -110,31 +100,12 @@ public class Ticket implements Serializable {
         this.dataProblemaTicket = dataProblemaTicket;
     }
 
-    @XmlTransient
-    public Collection<FechoTicket> getFechoTicketCollection() {
-        return fechoTicketCollection;
+    public TbFuncionario getPkFuncionario() {
+        return pkFuncionario;
     }
 
-    public void setFechoTicketCollection(Collection<FechoTicket> fechoTicketCollection) {
-        this.fechoTicketCollection = fechoTicketCollection;
-    }
-
-    @XmlTransient
-    public Collection<Intervencao> getIntervencaoCollection() {
-        return intervencaoCollection;
-    }
-
-    public void setIntervencaoCollection(Collection<Intervencao> intervencaoCollection) {
-        this.intervencaoCollection = intervencaoCollection;
-    }
-
-    @XmlTransient
-    public Collection<SolucaoTicket> getSolucaoTicketCollection() {
-        return solucaoTicketCollection;
-    }
-
-    public void setSolucaoTicketCollection(Collection<SolucaoTicket> solucaoTicketCollection) {
-        this.solucaoTicketCollection = solucaoTicketCollection;
+    public void setPkFuncionario(TbFuncionario pkFuncionario) {
+        this.pkFuncionario = pkFuncionario;
     }
 
     public Site getCodigoSite() {
@@ -159,14 +130,6 @@ public class Ticket implements Serializable {
 
     public void setCodigoImpacto(Impacto codigoImpacto) {
         this.codigoImpacto = codigoImpacto;
-    }
-
-    public Funcionario getCodigoFuncionario() {
-        return codigoFuncionario;
-    }
-
-    public void setCodigoFuncionario(Funcionario codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
     }
 
     public Estado getCodigoEstado() {
